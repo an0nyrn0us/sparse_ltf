@@ -1,0 +1,190 @@
+use lycaon::booster::Booster;
+use lycaon::booster::LPBoost;
+use lycaon::base_learner::DStump;
+use lycaon::read_csv;
+
+use std::time::Instant;
+use std::fs::OpenOptions;
+use std::io::Write;
+
+
+pub mod zddstump;
+pub mod average;
+pub mod zdd_softboosting;
+
+use zdd_softboosting::*;
+
+use zddstump::ZDDStump;
+
+
+fn main() {
+    {
+        let mut file = OpenOptions::new()
+            .write(true)
+            .create(true)
+            .open("stump_test_error.csv").unwrap();
+        let line = "dataset,\
+                    sample_size,\
+                    feature_size,\
+                    stump,\
+                    capping_ratio,\
+                    pre_process_time,\
+                    running_time,\
+                    optimal_value\n";
+        file.write_all(line.as_bytes()).unwrap();
+    }
+    // Path to datasets
+    let path = "/home/mitsuboshi/dataset/benchmarks/splitted/";
+
+    let datasets = [
+        "banana", "breast_cancer", "diabetis", "flare_solar", "german",
+        "heart", "image", "ringnorm", "splice", "thyroid",
+        "titanic", "twonorm", "waveform",
+    ];
+
+    for dataset in datasets {
+        // Concat the path and dataset
+        let name = format!("{path}{dataset}_train.csv");
+
+
+        // Read the LIBSVM file
+        let sample = read_csv(name).unwrap();
+
+        let m   = sample.len() as u64;
+        let dim = sample.feature_len() as u64;
+
+
+        let name = format!("{path}{dataset}_test.csv");
+        let test_sample = read_csv(name).unwrap();
+
+
+        // Initialize parameter.
+        // We fix the tolerance parameter as 0.01.
+        let tolerance = 0.01_f64;
+
+        let capping_ratios = (1..9).map(|n| n as f64 * 0.1)
+            .collect::<Vec<f64>>();
+
+
+        for capping_ratio in capping_ratios {
+            // Initialize the capping parameter.
+            let cap = sample.len() as f64 * capping_ratio;
+
+
+            println!(
+                "Dataset: {dataset},\
+                sample size: {m}, feature size: {dim}, cap: {capping_ratio}"
+            );
+
+
+            // LPBoost with Decision Stump compressed to ZDD.
+            {
+                println!("\tRunning LPBoost for ZDDStump...");
+                let mut lpboost = LPBoost::init(&sample).capping(cap);
+
+                // Initialize the base learner
+                let start  = Instant::now();
+                let zddstump = ZDDStump::init(&sample);
+                let zddstump = zddstump;
+                let finish = Instant::now();
+
+                let pre_process_time = (finish - start).as_secs_f64();
+                println!("\t\tPre process: {} sec", pre_process_time);
+
+
+                let start  = Instant::now();
+                lpboost.run(&zddstump, &sample, tolerance);
+                let finish = Instant::now();
+
+                let running_time = (finish - start).as_secs_f64();
+
+                println!("\t\tOptimal value: {}", lpboost.gamma_hat);
+                println!("\t\tRunning time:  {} sec", running_time);
+
+
+                write2file(
+                    &dataset,
+                    m,
+                    dim,
+                    "ZDDStump",
+                    capping_ratio,
+                    pre_process_time,
+                    running_time,
+                    lpboost.gamma_hat
+                ).unwrap();
+            }
+
+
+
+
+            // LPBoost with Decision Stump compressed to ZDD.
+            {
+                println!("\tRunning LPBoost for DStump...");
+                let mut lpboost = LPBoost::init(&sample).capping(cap);
+
+                // Initialize the base learner
+                let start  = Instant::now();
+                let dstump = DStump::init(&sample);
+                let dstump = dstump;
+                let finish = Instant::now();
+
+                let pre_process_time = (finish - start).as_secs_f64();
+                println!("\t\tPre process: {} sec", pre_process_time);
+
+
+                let start  = Instant::now();
+                lpboost.run(&dstump, &sample, tolerance);
+                let finish = Instant::now();
+
+                let running_time = (finish - start).as_secs_f64();
+
+                println!("\t\tOptimal value: {}", lpboost.gamma_hat);
+                println!("\t\tRunning time:  {} sec", running_time);
+
+
+                write2file(
+                    &dataset,
+                    m,
+                    dim,
+                    &"DStump",
+                    capping_ratio,
+                    pre_process_time,
+                    running_time,
+                    lpboost.gamma_hat
+                ).unwrap();
+            }
+        }
+    }
+}
+
+
+fn write2file(dataset:    &str,
+              m:           u64,
+              dim:         u64,
+              stump:      &str,
+              capping:     f64,
+              pre_process: f64,
+              running:     f64,
+              opt_val:     f64)
+    -> std::io::Result<()>
+{
+    // The output file name
+    let output = "stump_test_error.csv";
+
+    let mut file = OpenOptions::new()
+        .append(true)
+        .open(output)?;
+
+
+    let line = format!(
+        "{dataset},{m},{dim},{stump},{capping},\
+         {pre_process},{running},{opt_val}\n",
+    );
+
+
+    file.write_all(line.as_bytes())?;
+
+
+    Ok(())
+}
+

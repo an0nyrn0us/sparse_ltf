@@ -1,0 +1,10 @@
+[package]
+name = "sparse_ltf"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+lycaon = { git = "https://github.com/rmitsuboshi/lycaon" }
+grb    = "1.0.4"

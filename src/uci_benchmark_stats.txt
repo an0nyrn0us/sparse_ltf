@@ -1,0 +1,189 @@
+banana:
+    - # of examples:   5300
+    - # of features:   2
+    - # of hypotheses: 21204
+
+    - Optimal value:
+        - LPBoost: 0.10456, iteration=6
+        - LPBoost(NZDD): 0.104088, iteration=6
+
+    - Computation time of one LP:    
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+breast_cancer:
+    - # of examples:   263
+    - # of features:   9
+    - # of hypotheses: 100
+
+    - Optimal value: 0.334601
+        - LPBoost: 0.344106, iteration=5
+        - LPBoost(NZDD): 0.344106, iteration=5
+
+    - Computation time of one LP:    0.030652 sec
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+diabetis:
+    - # of examples:   768
+    - # of features:   8
+    - # of hypotheses: 2524
+
+    - Optimal value: 0.375
+        - LPBoost: 0.375, iteration=4
+        - LPBoost(NZDD): 0.375, iteration=4
+
+    - Computation time
+        - LP:                 1.38935
+        - LPBoost:
+        - LPBoost(ZDD):       0.005593
+        - ERLPBoost:
+        - ERLPBoost(ZDD):     0.021119
+        - NZDD-FW(Classical): 0.006336
+
+
+flare_solar:
+    - # of examples:   144
+    - # of features:   9
+    - # of hypotheses: 80
+
+    - Optimal value: 0.131944
+        - LPBoost: 0.131944, iteration=7
+        - LPBoost(NZDD): 0.131944, iteration=7
+
+    - Computation time
+        - LP:                 0.012532
+        - LPBoost:
+        - LPBoost(ZDD):       0.006017
+        - ERLPBoost:
+        - ERLPBoost(ZDD):     0.003128
+        - NZDD-FW(Classical): 0.001002
+
+
+german:
+    - # of examples:   1000
+    - # of features:   20
+    - # of hypotheses: 2190
+
+    - Optimal value: 0.2925
+        - LPBoost: 0.2975, iteration=5
+        - LPBoost(NZDD): 0.2925, iteration=5
+
+    - Computation time
+        - LP:                 4.20604
+        - LPBoost:
+        - LPBoost(ZDD):       0.006388
+        - ERLPBoost:
+        - ERLPBoost(ZDD):     0.031308
+        - NZDD-FW(Classical): 0.005239
+
+
+heart:
+    - # of examples:   270
+    - # of features:   13
+    - # of hypotheses: 794
+
+    - Optimal value: 0.407407
+
+    - Computation time of one LP:    0.225845
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+image:
+    - # of examples:   2086
+    - # of features:   18
+    - # of hypotheses: 28354
+
+    - Optimal value: 
+
+    - Computation time
+        - LP:                 
+        - LPBoost:
+        - LPBoost(ZDD):       0.061007
+        - ERLPBoost:
+        - ERLPBoost(ZDD):     0.100022
+        - NZDD-FW(Classical): 0.510766
+
+
+ringnorm:
+    - # of examples:   7400
+    - # of features:   20
+    - # of hypotheses: 
+
+    - Optimal value: 
+
+    - Computation time of one LP:    
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+splice:
+    - # of examples:   2991
+    - # of features:   60
+    - # of hypotheses: 600
+
+    - Optimal value: 0.424106
+
+    - Computation time of one LP:    3.2427
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+thyroid:
+    - # of examples:   215
+    - # of features:   5
+    - # of hypotheses: 678
+
+    - Optimal value: 0.546512
+
+    - Computation time of one LP:    0.144851
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+titanic:
+    - # of examples:   24
+    - # of features:   3
+    - # of hypotheses: 22
+
+    - Optimal value: 0.0
+
+    - Computation time of one LP:    0.002182
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+twonorm:
+    - # of examples:   7400
+    - # of features:   20
+    - # of hypotheses: 
+
+    - Optimal value: 
+
+    - Computation time of one LP:    
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
+
+
+waveform:
+    - # of examples:   5000
+    - # of features:   21
+    - # of hypotheses: 30032
+
+    - Optimal value: 
+
+    - Computation time of one LP:    
+    - Computation time of LPBoost:   
+    - Computation time of ERLPBoost: 
+    - Computation time of NZDD-FW:   
